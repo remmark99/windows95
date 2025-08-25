@@ -2,7 +2,6 @@
 	import Button from './Button.svelte';
 
 	const { icon, title, onclose, onmaximize, onminimize, isFocused } = $props();
-  console.log(isFocused);
 </script>
 
 <div class={['flex items-center justify-between bg-[#7b7d7b] p-1 text-white', isFocused && 'bg-blue']}>

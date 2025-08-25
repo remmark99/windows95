@@ -4,7 +4,10 @@
 
 	const { icon, title } = $props();
 	let isOpen = $state(false);
-	let isMinimized = $state(false);
+	let applicationState = $derived(applicationsState.get(title));
+  console.log(applicationState);
+  let isFocused = applicationState?.isFocused;
+  let isMinimized = applicationState?.isMinimized;
 
 	function openWindow() {
 		isOpen = !isOpen;
@@ -26,8 +29,6 @@
 		});
 	}
 
-  console.log(applicationsState);
-
 	function closeWindow() {
 		isOpen = !isOpen;
 		applicationsState.delete(title);
@@ -42,12 +43,12 @@
 {#if isOpen}
 	<div
 		class={[
-			'flex h-100 w-200 flex-col bg-grey px-1 py-0.5 inset-shadow-window',
+			'flex h-100 w-200 flex-col bg-grey px-1 py-0.5 inset-shadow-window absolute',
 			{ hidden: isMinimized }
 		]}
 	>
 		<ApplicationTitlebar
-			isFocused={applicationsState.get(title)}
+			isFocused={isFocused}
 			{icon}
 			{title}
 			onminimize={() => (isMinimized = !isMinimized)}
