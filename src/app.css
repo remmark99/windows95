@@ -1,0 +1,54 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+@plugin 'tailwind-scrollbar';
+
+@theme {
+  --color-grey: #C0C0C0;
+  --color-blue: #000080;
+  --inset-shadow-btn: inset 1px 1px 0 0 #FFF, inset -1px -1px 0 0 #000, inset -2px -2px 0 0 #818181;
+  --inset-shadow-time: inset -1px -1px 0 0 #FFF, inset 1px 1px 0 0 #808080;
+  --inset-shadow-window: inset -1px -1px 0 0 #000, inset 1px 1px 0 0 #FFF, inset -2px -2px 0 0 #7F7F7F, inset 2px 2px 0 0 #DFDFDF;
+    --inset-shadow-navlink: inset -1px -1px 0 0 #FFF, inset 1px 1px 0 0 #000;
+  --conic-gradient: #
+}
+
+@font-face {
+  font-family: 'W95F';
+  src: url("/fonts/w95font.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'W95F';
+  src: url("/fonts/w95font-bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@utility conic-bg {
+  background: repeating-conic-gradient(#bdbebd 0 25%, #fff 0 50%) 50% / 2px 2px;
+}
+
+body {
+  height: 100vh;
+  font-family: "W95F", sans-serif;
+  background-color: red;
+  display: flex;
+  flex-direction: column;
+}
+
+::-webkit-scrollbar {
+  @apply conic-bg;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #bdbebd;
+  border-color: #fafafa #5a5a5a #5a5a5a #fafafa;
+  border-style: solid;
+  border-width: 1.5px;
+  outline: #dbdbdb
+}
