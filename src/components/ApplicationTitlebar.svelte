@@ -1,10 +1,18 @@
 <script lang="ts">
 	import Button from './Button.svelte';
 
-	const { icon, title, onclose, onmaximize, onminimize, isFocused } = $props();
+	const { icon, title, onclose, onmaximize, onminimize, isFocused, onmousedown } =
+		$props();
 </script>
 
-<div class={['flex items-center justify-between bg-[#7b7d7b] p-1 text-white', isFocused && 'bg-blue']}>
+<div
+	role="heading"
+	class={[
+		'flex cursor-move items-center justify-between bg-[#7b7d7b] p-1 text-white',
+		isFocused && 'bg-blue'
+	]}
+	{onmousedown}
+>
 	<div class="flex items-center space-x-1">
 		<img src={icon} alt="Application icon" height="16" width="16" />
 		<span>{title}</span>
