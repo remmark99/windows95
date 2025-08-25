@@ -4,28 +4,27 @@
 
 	const { icon, title } = $props();
 	let isOpen = $state(false);
-	let applicationState = $derived(applicationsState.get(title));
-  console.log(applicationState);
-  let isFocused = applicationState?.isFocused;
-  let isMinimized = applicationState?.isMinimized;
+	let appState = $derived(applicationsState.get(title));
+	let isFocused = $derived(appState?.isFocused ?? false);
+	let isMinimized = $derived(appState?.isMinimized ?? false);
 
 	function openWindow() {
 		isOpen = !isOpen;
 
 		// unfocus old
-		for (const [application, isFocused] of applicationsState) {
+		for (const [application, { isFocused, isMinimized }] of applicationsState) {
 			if (isFocused) {
 				applicationsState.set(application, {
-					isFocused: false,
-					isMinimized: false
+					isMinimized,
+					isFocused: false
 				});
 				break;
 			}
 		}
 
 		applicationsState.set(title, {
-			isFocused: true,
-			isMinimized: false
+			isMinimized,
+			isFocused: true
 		});
 	}
 
@@ -43,12 +42,13 @@
 {#if isOpen}
 	<div
 		class={[
-			'flex h-100 w-200 flex-col bg-grey px-1 py-0.5 inset-shadow-window absolute',
-			{ hidden: isMinimized }
+			'absolute flex h-100 w-200 flex-col bg-grey px-1 py-0.5 inset-shadow-window',
+			{ hidden: isMinimized },
+			isFocused && 'z-10'
 		]}
 	>
 		<ApplicationTitlebar
-			isFocused={isFocused}
+			{isFocused}
 			{icon}
 			{title}
 			onminimize={() => (isMinimized = !isMinimized)}
