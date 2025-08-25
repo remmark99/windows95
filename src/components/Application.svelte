@@ -3,13 +3,13 @@
 	import { applicationsState, isMoving } from '../state.svelte';
 	import { focusApplication } from '$lib/helpers.svelte';
 
-	const { icon, title, contentClass, children } = $props();
-	let isOpen = $state(false);
-	let left = $state(300);
-	let top = $state(300);
+	const { icon, title, contentClass = '', children } = $props();
+	let left = $state(0);
+	let top = $state(0);
 	let appState = $derived(applicationsState.get(title));
 	let isFocused = $derived(appState?.isFocused ?? false);
 	let isMinimized = $derived(appState?.isMinimized ?? false);
+	let popover: HTMLDivElement;
 
 	function moveApplication(e) {
 		if ($isMoving === title) {
@@ -19,18 +19,18 @@
 	}
 
 	function openWindow() {
-		isOpen = !isOpen;
-
+		popover.showPopover();
 		applicationsState.set(title, {
 			isFocused: false,
-			isMinimized: false
+			isMinimized: false,
+			content: children()
 		});
 
 		focusApplication(title);
 	}
 
 	function closeWindow() {
-		isOpen = !isOpen;
+		popover.hidePopover();
 		applicationsState.delete(title);
 	}
 </script>
@@ -40,17 +40,20 @@
 	<img src={icon} alt="Application icon" />
 	<span class="text-center">{title}</span>
 </button>
-{#if isOpen}
-	<div
-		class={[
-			'application absolute flex h-100 w-200 flex-col bg-grey px-1 py-0.5 inset-shadow-window',
-			{ hidden: isMinimized },
-			isFocused && 'z-10',
-			$isMoving && 'select-none'
-		]}
-		style="transform: translate({left}px, {top}px)"
-		onmousedown={() => focusApplication(title)}
-	>
+
+<div
+	popover="manual"
+	bind:this={popover}
+	class={[
+		'h-200 w-200 bg-grey px-1 py-0.5 inset-shadow-window',
+		{ hidden: isMinimized },
+		// isFocused && 'z-10',
+		$isMoving && 'select-none'
+	]}
+	style="transform: translate({left}px, {top}px)"
+	onmousedown={() => focusApplication(title)}
+>
+	<div class="flex h-full flex-col">
 		<ApplicationTitlebar
 			{isFocused}
 			{icon}
@@ -65,14 +68,14 @@
 				isMoving.set(title);
 			}}
 		/>
-		<div class={['custom-scrollbar h-96 grow overflow-y-scroll', contentClass]}>
+		<div class={['custom-scrollbar h-full grow overflow-y-auto', contentClass]}>
 			{#if $isMoving}
 				<div class="drag-overlay" />
 			{/if}
 			{@render children()}
 		</div>
 	</div>
-{/if}
+</div>
 
 <style>
 	.drag-overlay {

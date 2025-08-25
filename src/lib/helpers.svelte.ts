@@ -3,10 +3,10 @@ import { applicationsState } from "../state.svelte";
 export function focusApplication(title: string) {
   if (!applicationsState.has(title)) return;
 
-  for (const [application, { isFocused, isMinimized }] of applicationsState) {
+  for (const [application, { isFocused }] of applicationsState) {
     if (isFocused) {
       applicationsState.set(application, {
-        isMinimized,
+        ...applicationsState.get(application),
         isFocused: false
       });
       break;
@@ -15,7 +15,7 @@ export function focusApplication(title: string) {
 
   const isMinimized = applicationsState.get(title)!.isMinimized;
   applicationsState.set(title, {
-    isMinimized,
+    ...applicationsState.get(title),
     isFocused: true
   });
 }
