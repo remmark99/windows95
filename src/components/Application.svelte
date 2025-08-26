@@ -1,12 +1,13 @@
 <script lang="ts">
 	import ApplicationTitlebar from './ApplicationTitlebar.svelte';
 	import { applicationsState, isMoving, focusedApp } from '../state';
-	import { focusApplication } from '$lib/helpers.svelte';
+	import { portal } from 'svelte-portal';
 
 	const { icon, title, contentClass = '', children } = $props();
 	let left = $state(0);
 	let top = $state(0);
-	let popover: HTMLDivElement;
+	let isOpen = $state(false);
+	const applicationState = applicationsState.get(title);
 
 	function moveApplication(e) {
 		if ($isMoving === title) {
@@ -16,63 +17,66 @@
 	}
 
 	function openWindow() {
-		popover.showPopover();
+		isOpen = true;
+
 		applicationsState.set(title, {
-			isFocused: false,
-			isMinimized: false,
-			content: children()
+			isMinimized: false
 		});
 
-		focusApplication(title);
+		$focusedApp = title;
 	}
 
 	function closeWindow() {
-		popover.hidePopover();
 		applicationsState.delete(title);
+    isOpen = false;
+		$focusedApp = null;
 	}
 </script>
 
-<svelte:window onmousemove={moveApplication} />
+<svelte:window onmousemove={moveApplication} onmouseup={() => isMoving.set(null)} />
 <button class="flex h-20 w-10 flex-col items-center" ondblclick={openWindow}>
 	<img src={icon} alt="Application icon" />
 	<span class="text-center">{title}</span>
 </button>
 
-<div
-	popover="manual"
-	bind:this={popover}
-	class={[
-		'h-200 w-200 bg-grey px-1 py-0.5 inset-shadow-window',
-		{ hidden: isMinimized },
-		// isFocused && 'z-10',
-		$isMoving && 'select-none'
-	]}
-	style="transform: translate({left}px, {top}px)"
-	onmousedown={() => focusApplication(title)}
->
-	<div class="flex h-full flex-col">
-		<ApplicationTitlebar
-			{isFocused}
-			{icon}
-			{title}
-			onminimize={() => (isMinimized = !isMinimized)}
-			onmaximize={() => {}}
-			onclose={closeWindow}
-			onmousedown={(event) => {
-				const target = event.target as HTMLElement;
+{#if isOpen}
+	<div
+		use:portal
+		role="dialog"
+		tabindex="0"
+		class={[
+			'h-200 w-200 bg-grey px-1 py-0.5 inset-shadow-window absolute',
+			{ hidden: applicationState?.isMinimized },
+			$focusedApp === title && 'z-10',
+			$isMoving && 'select-none'
+		]}
+		style="transform: translate({left}px, {top}px)"
+		onmousedown={() => ($focusedApp = title)}
+	>
+		<div class="flex h-full flex-col">
+			<ApplicationTitlebar
+				isFocused={$focusedApp === title}
+				{icon}
+				{title}
+				onminimize={() => (applicationState!.isMinimized = true)}
+				onmaximize={() => {}}
+				onclose={closeWindow}
+				onmousedown={(event) => {
+					const target = event.target as HTMLElement;
 
-				if (target.closest('button')) return;
-				isMoving.set(title);
-			}}
-		/>
-		<div class={['custom-scrollbar h-full grow overflow-y-auto', contentClass]}>
-			{#if $isMoving}
-				<div class="drag-overlay" />
-			{/if}
-			{@render children()}
+					if (target.closest('button')) return;
+					isMoving.set(title);
+				}}
+			/>
+			<div class={['custom-scrollbar h-full grow overflow-y-auto', contentClass]}>
+				{#if $isMoving}
+					<div class="drag-overlay"></div>
+				{/if}
+				{@render children()}
+			</div>
 		</div>
 	</div>
-</div>
+{/if}
 
 <style>
 	.drag-overlay {

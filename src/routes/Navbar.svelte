@@ -6,7 +6,7 @@
 	import { focusedApp } from '../state';
 </script>
 
-<nav class="flex justify-between bg-grey p-1">
+<nav class="flex justify-between bg-grey p-1 z-20">
 	<div class="flex space-x-1">
 		<NavbarItem text="Start" icon={startIcon} class="w-16! font-bold" />
 		{#each applicationsState.entries() as [title, { isMinimized }] (title)}
