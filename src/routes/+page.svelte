@@ -1,11 +1,8 @@
 <script lang="ts">
 	import Application from '../components/Application.svelte';
 	import folderIcon from '$lib/assets/Folder.svg';
-	import { applicationsState, isMoving } from '../state.svelte';
+	import { isMoving } from '../state';
 	import Folder from '../components/Folder.svelte';
-
-	const applications = $derived(applicationsState.entries());
-  console.log(applications)
 </script>
 
 <main class="flex-grow bg-[#008080] p-4" onmouseup={() => isMoving.set(null)}>
@@ -21,7 +18,4 @@
 		>
 		</iframe>
 	</Application>
-	{#each applications as [key, value] (key)}
-		<div>Hello</div>
-	{/each}
 </main>

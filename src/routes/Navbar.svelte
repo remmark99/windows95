@@ -2,35 +2,21 @@
 	import NavbarItem from '../components/NavbarItem.svelte';
 	import startIcon from '$lib/assets/Start.svg';
 	import folderIcon from '$lib/assets/Folder.svg';
-	import { applicationsState } from '../state.svelte';
-
-	function focusApplication(title: string) {
-		for (const [application, { isFocused, isMinimized }] of applicationsState) {
-			if (isFocused) {
-				applicationsState.set(application, {
-					isFocused: false,
-					isMinimized
-				});
-				break;
-			}
-		}
-
-		applicationsState.set(title, {
-			...applicationsState.get(title),
-			isFocused: true
-		});
-	}
+	import { applicationsState } from '../state';
+	import { focusedApp } from '../state';
 </script>
 
 <nav class="flex justify-between bg-grey p-1">
 	<div class="flex space-x-1">
 		<NavbarItem text="Start" icon={startIcon} class="w-16! font-bold" />
-		{#each applicationsState.entries() as [title, { isFocused, isMinimized }] (title)}
+		{#each applicationsState.entries() as [title, { isMinimized }] (title)}
 			<NavbarItem
 				text={title}
 				icon={folderIcon}
-				class={{ 'shadow-none inset-shadow-navlink conic-bg': isFocused && !isMinimized }}
-				onclick={() => focusApplication(title)}
+				class={{
+					'shadow-none inset-shadow-navlink conic-bg': $focusedApp === title && !isMinimized
+				}}
+				onclick={() => focusedApp.set(title)}
 			/>
 		{/each}
 	</div>

@@ -1,13 +1,11 @@
-import type { SvelteComponent } from "svelte";
+import type { Component } from "svelte";
 import { SvelteMap } from "svelte/reactivity";
 import { writable } from "svelte/store";
 
 export const applicationsState = new SvelteMap<string, {
-  isFocused: boolean;
   isMinimized: boolean;
-  content: SvelteComponent;
+  content: Component<any>;
 }>();
-applicationsState.set('test', { 
-isFocused: true, isMinimized: true, content: "test"})
 
+export const focusedApp = writable<string | null>(null);
 export const isMoving = writable<string | null>(null);

@@ -36,7 +36,6 @@
 body {
   height: 100vh;
   font-family: "W95F", sans-serif;
-  background-color: red;
   display: flex;
   flex-direction: column;
 }

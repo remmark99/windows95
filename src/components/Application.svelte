@@ -1,14 +1,11 @@
 <script lang="ts">
 	import ApplicationTitlebar from './ApplicationTitlebar.svelte';
-	import { applicationsState, isMoving } from '../state.svelte';
+	import { applicationsState, isMoving, focusedApp } from '../state';
 	import { focusApplication } from '$lib/helpers.svelte';
 
 	const { icon, title, contentClass = '', children } = $props();
 	let left = $state(0);
 	let top = $state(0);
-	let appState = $derived(applicationsState.get(title));
-	let isFocused = $derived(appState?.isFocused ?? false);
-	let isMinimized = $derived(appState?.isMinimized ?? false);
 	let popover: HTMLDivElement;
 
 	function moveApplication(e) {

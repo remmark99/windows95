@@ -1,4 +1,4 @@
-import { applicationsState } from "../state.svelte";
+import { applicationsState } from "../state";
 
 export function focusApplication(title: string) {
   if (!applicationsState.has(title)) return;
