@@ -28,55 +28,58 @@
 
 	function closeWindow() {
 		applicationsState.delete(title);
-    isOpen = false;
+		isOpen = false;
 		$focusedApp = null;
 	}
+	// focus:bg-[#091558]
 </script>
 
 <svelte:window onmousemove={moveApplication} onmouseup={() => isMoving.set(null)} />
-<button class="flex h-20 w-10 flex-col items-center" ondblclick={openWindow}>
+<button
+	class="icon flex h-20 w-10 flex-col items-center focus:outline-none"
+	ondblclick={openWindow}
+>
 	<img src={icon} alt="Application icon" />
-	<span class="text-center">{title}</span>
+
+	<span class="inline-block text-center text-white">{title}</span>
 </button>
 
-{#if isOpen}
-	<div
-		use:portal
-		role="dialog"
-		tabindex="0"
-		class={[
-			'h-200 w-200 bg-grey px-1 py-0.5 inset-shadow-window absolute',
-			{ hidden: applicationState?.isMinimized },
-			$focusedApp === title && 'z-10',
-			$isMoving && 'select-none'
-		]}
-		style="transform: translate({left}px, {top}px)"
-		onmousedown={() => ($focusedApp = title)}
-	>
-		<div class="flex h-full flex-col">
-			<ApplicationTitlebar
-				isFocused={$focusedApp === title}
-				{icon}
-				{title}
-				onminimize={() => (applicationState!.isMinimized = true)}
-				onmaximize={() => {}}
-				onclose={closeWindow}
-				onmousedown={(event) => {
-					const target = event.target as HTMLElement;
+<div
+	use:portal
+	role="dialog"
+	tabindex="0"
+	class={[
+		'absolute h-1 min-h-[80vh] w-[50vw] min-w-[50vw] bg-grey p-1 inset-shadow-window',
+		{ hidden: applicationState?.isMinimized || !isOpen },
+		$focusedApp === title && 'z-10',
+		$isMoving && 'select-none'
+	]}
+	style="transform: translate({left}px, {top}px)"
+	onmousedown={() => ($focusedApp = title)}
+>
+	<div class="flex h-full flex-col">
+		<ApplicationTitlebar
+			isFocused={$focusedApp === title}
+			{icon}
+			{title}
+			onminimize={() => (applicationState!.isMinimized = true)}
+			onmaximize={() => {}}
+			onclose={closeWindow}
+			onmousedown={(event) => {
+				const target = event.target as HTMLElement;
 
-					if (target.closest('button')) return;
-					isMoving.set(title);
-				}}
-			/>
-			<div class={['custom-scrollbar h-full grow overflow-y-auto', contentClass]}>
-				{#if $isMoving}
-					<div class="drag-overlay"></div>
-				{/if}
-				{@render children()}
-			</div>
+				if (target.closest('button')) return;
+				isMoving.set(title);
+			}}
+		/>
+		<div class={['custom-scrollbar m-auto h-full w-full grow overflow-y-auto', contentClass]}>
+			{#if $isMoving}
+				<div class="drag-overlay"></div>
+			{/if}
+			{@render children()}
 		</div>
 	</div>
-{/if}
+</div>
 
 <style>
 	.drag-overlay {
@@ -88,5 +91,14 @@
 		z-index: 50;
 		cursor: grabbing;
 		background-color: rgba(0, 0, 0, 0);
+	}
+
+	.icon:focus img {
+		filter: brightness(8%) sepia(10) saturate(50) hue-rotate(200deg);
+	}
+
+	.icon:focus span {
+		background: #091558;
+		border: dotted 1px white;
 	}
 </style>

@@ -9,7 +9,9 @@
   --inset-shadow-btn: inset 1px 1px 0 0 #FFF, inset -1px -1px 0 0 #000, inset -2px -2px 0 0 #818181;
   --inset-shadow-time: inset -1px -1px 0 0 #FFF, inset 1px 1px 0 0 #808080;
   --inset-shadow-window: inset -1px -1px 0 0 #000, inset 1px 1px 0 0 #FFF, inset -2px -2px 0 0 #7F7F7F, inset 2px 2px 0 0 #DFDFDF;
-    --inset-shadow-navlink: inset -1px -1px 0 0 #FFF, inset 1px 1px 0 0 #000;
+  --inset-shadow-navlink: inset -1px -1px 0 0 #FFF, inset 1px 1px 0 0 #000;
+  --inset-shadow-folder: inset -1px -1px 0 0 #FFF, inset 1px 1px 0 0 #808080, inset -2px -2px 0 0 #C1C1C1, inset 2px 2px 0 0 #000000;
+
   --conic-gradient: #
 }
 

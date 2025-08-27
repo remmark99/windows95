@@ -3,7 +3,8 @@
 	import folderIcon from '$lib/assets/Folder.svg';
 	import Folder from '../components/Folder.svelte';
 	import { applicationsState } from '../state';
-	import Svxfile from '../test.svx';
+	const modules = import.meta.glob('../notes/*.svx', { eager: true });
+	console.log(modules);
 
 	console.log($state.snapshot(applicationsState));
 </script>
@@ -11,7 +12,16 @@
 <main class="flex-grow bg-[#008080] p-4">
 	<div class="contents" role="grid" tabindex="0">
 		<Application icon={folderIcon} title="Notes">
-			<Folder />
+			<Folder>
+				{#each Object.entries(modules) as [todo, module] (todo)}
+					{@const Note = module.default}
+					<Application title={todo.split("/")[2]} icon={folderIcon}>
+						<div class="prose">
+							<Note />
+						</div>
+					</Application>
+				{/each}
+			</Folder>
 		</Application>
 		<Application icon={folderIcon} title="Resume" contentClass="overflow-y-hidden!">
 			<iframe
@@ -21,9 +31,6 @@
 				height="800px"
 			>
 			</iframe>
-		</Application>
-		<Application icon={folderIcon} title="TESTNOTE">
-			<Svxfile />
 		</Application>
 	</div>
 </main>

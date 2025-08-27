@@ -1,12 +1,11 @@
 <script lang="ts">
 	import Button from './Button.svelte';
 
-	const { icon, title, onclose, onmaximize, onminimize, isFocused, onmousedown } =
-		$props();
+	const { icon, title, onclose, onmaximize, onminimize, isFocused, onmousedown } = $props();
 </script>
 
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-	role="heading"
 	class={[
 		'flex cursor-move items-center justify-between bg-[#7b7d7b] p-1 text-white',
 		isFocused && 'bg-blue'
@@ -29,4 +28,10 @@
 			<span>X</span>
 		</Button>
 	</div>
+</div>
+<div class="pl-4 space-x-1">
+	<span><u>F</u>ile</span>
+	<span><u>E</u>dit</span>
+	<span><u>V</u>iew</span>
+	<span><u>H</u>elp</span>
 </div>
