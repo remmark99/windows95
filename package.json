@@ -39,6 +39,7 @@
 		"vite": "^7.0.4"
 	},
 	"dependencies": {
+		"clippyts": "^1.0.4",
 		"svelte-pdf": "^1.0.28",
 		"svelte-portal": "^2.2.1",
 		"tailwind-scrollbar": "^4.0.2"

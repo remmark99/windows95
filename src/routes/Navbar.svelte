@@ -1,14 +1,14 @@
 <script lang="ts">
 	import NavbarItem from '../components/NavbarItem.svelte';
-	import startIcon from '$lib/assets/Start.svg';
 	import folderIcon from '$lib/assets/Folder.svg';
 	import { applicationsState } from '../state';
 	import { focusedApp } from '../state';
+	import StartButton from '../components/StartButton.svelte';
 </script>
 
-<nav class="flex justify-between bg-grey p-1 z-20">
-	<div class="flex space-x-1">
-		<NavbarItem text="Start" icon={startIcon} class="w-16! font-bold" />
+<nav class="z-20 flex justify-between bg-grey p-1">
+	<div class="relative flex space-x-1">
+		<StartButton />
 		{#each applicationsState.entries() as [title, { isMinimized }] (title)}
 			<NavbarItem
 				text={title}

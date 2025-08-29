@@ -3,7 +3,7 @@
 	import { applicationsState, isMoving, focusedApp } from '../state';
 	import { portal } from 'svelte-portal';
 
-	const { icon, title, contentClass = '', children } = $props();
+	const { icon, title, contentClass = '', titleClass = '', children } = $props();
 	let left = $state(0);
 	let top = $state(0);
 	let isOpen = $state(false);
@@ -36,12 +36,12 @@
 
 <svelte:window onmousemove={moveApplication} onmouseup={() => isMoving.set(null)} />
 <button
-	class="icon flex h-20 w-10 flex-col items-center focus:outline-none"
+	class="icon flex h-20 w-10 flex-col items-center application-icon focus:outline-none"
 	ondblclick={openWindow}
 >
 	<img src={icon} alt="Application icon" />
 
-	<span class="inline-block text-center text-white">{title}</span>
+	<span class="inline-block text-center">{title}</span>
 </button>
 
 <div

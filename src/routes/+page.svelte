@@ -2,14 +2,11 @@
 	import Application from '../components/Application.svelte';
 	import folderIcon from '$lib/assets/Folder.svg';
 	import Folder from '../components/Folder.svelte';
-	import { applicationsState } from '../state';
+	import Clippy from '../components/Clippy.svelte';
 	const modules = import.meta.glob('../notes/*.svx', { eager: true });
-	console.log(modules);
-
-	console.log($state.snapshot(applicationsState));
 </script>
 
-<main class="flex-grow bg-[#008080] p-4">
+<main class="flex-grow bg-[#008080] p-4 relative">
 	<div class="contents" role="grid" tabindex="0">
 		<Application icon={folderIcon} title="Notes">
 			<Folder>
@@ -32,5 +29,6 @@
 			>
 			</iframe>
 		</Application>
+    <Clippy />
 	</div>
 </main>
