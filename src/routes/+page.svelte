@@ -4,11 +4,13 @@
 	import Folder from '../components/Folder.svelte';
 	import Clippy from '../components/Clippy.svelte';
   import noteIcon from "$lib/assets/Note.svg";
+	import Tabs from '../components/Tabs.svelte';
 	const modules = import.meta.glob('../notes/*.svx', { eager: true });
 </script>
 
 <main class="relative flex-grow flex gap-y-4 flex-col flex-wrap bg-[#008080] py-4">
 	<div class="contents" role="grid" tabindex="0">
+    <Tabs />
 		<Application icon={folderIcon} title="Notes">
 			<Folder>
 				{#each Object.entries(modules) as [todo, module] (todo)}

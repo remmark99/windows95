@@ -12,6 +12,7 @@
   --inset-shadow-navlink: inset -1px -1px 0 0 #FFF, inset 1px 1px 0 0 #000;
   --inset-shadow-folder: inset -1px -1px 0 0 #FFF, inset 1px 1px 0 0 #808080, inset -2px -2px 0 0 #C1C1C1, inset 2px 2px 0 0 #000000;
     --inset-shadow-list: inset -2px -2px 0 0 #000, inset 2px 2px 0 0 #FFF, inset -3px -3px 0 0 #818181;
+  --inset-shadow-tabs: inset -1px -1px 0 0 #000, inset 1px 1px 0 0 #FFF, inset -2px -2px 0 0 #808080; 
 }
 
 @font-face {
