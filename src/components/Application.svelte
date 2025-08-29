@@ -8,11 +8,16 @@
 	let top = $state(0);
 	let isOpen = $state(false);
 	const applicationState = applicationsState.get(title);
+	let applicationWindow: HTMLDivElement;
 
 	function moveApplication(e) {
+    const container = document.getElementsByTagName("main")[0].getBoundingClientRect();
+		const maxX = container.width - applicationWindow.getBoundingClientRect().width;
+		const maxY = container.height - applicationWindow.getBoundingClientRect().height;
+
 		if ($isMoving === title) {
-			left += e.movementX;
-			top += e.movementY;
+			left = Math.min(Math.max(left + e.movementX, 0), maxX);
+			top = Math.min(Math.max(top + e.movementY, 0), maxY);
 		}
 	}
 
@@ -36,7 +41,7 @@
 
 <svelte:window onmousemove={moveApplication} onmouseup={() => isMoving.set(null)} />
 <button
-	class="icon flex h-20 w-10 flex-col items-center application-icon focus:outline-none"
+	class="icon application-icon flex h-20 w-10 flex-col items-center focus:outline-none"
 	ondblclick={openWindow}
 >
 	<img src={icon} alt="Application icon" />
@@ -45,6 +50,7 @@
 </button>
 
 <div
+	bind:this={applicationWindow}
 	use:portal
 	role="dialog"
 	tabindex="0"
