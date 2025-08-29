@@ -2,7 +2,7 @@
 title: Dynamic imports in NextJS
 ---
 
-# Dynamic imports in NextJS
+# {title}
 
 Imagine for a second that you're me. Wait, come back, what do you mean you're too lazy to read that?! You have a huge list of your TIL notes (currently 3) and you want to display them on your website. Also, you're using NextJS. 
 

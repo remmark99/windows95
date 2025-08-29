@@ -2,7 +2,7 @@
 title: Daemonizing Node apps
 ---
 
-# Daemonizing Node apps
+# {title}
 
 ### Chapter 1: The Problem
 

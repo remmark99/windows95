@@ -2,7 +2,7 @@
 title: 22 Penetrations
 ---
 
-# 22 Penetrations
+# {title}
 
 Did you know you're more popular than you think? Well, not *you* - your server with an open port 22. 
 
