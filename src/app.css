@@ -61,6 +61,10 @@ body {
   color: black;
 }
 
+.folder > .application-icon:focus {
+  color: white;
+}
+
 .clippy {
   position: absolute;
 }

@@ -20,8 +20,8 @@
 			/>
 		{/each}
 	</div>
-	<div class="flex w-21 space-x-2 px-1 inset-shadow-time">
+	<div class="flex w-16 space-x-2 px-1 inset-shadow-time items-center">
 		<img src={folderIcon} alt="Folder" width="16px" height="16px" />
-		<span>10:36 PM</span>
+		<span>{new Date().toLocaleString('ru-RU', { hour: 'numeric', minute: 'numeric' })}</span>
 	</div>
 </nav>

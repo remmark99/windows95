@@ -1,3 +1,6 @@
+---
+title: First note
+---
 # First note
 
 I've finally decided to create my own website!

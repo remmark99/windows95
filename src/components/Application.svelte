@@ -41,12 +41,12 @@
 
 <svelte:window onmousemove={moveApplication} onmouseup={() => isMoving.set(null)} />
 <button
-	class="icon application-icon flex h-20 w-10 flex-col items-center focus:outline-none"
+	class="icon application-icon flex flex-col w-20 max-h-20 items-center focus:outline-none"
 	ondblclick={openWindow}
 >
-	<img src={icon} alt="Application icon" />
+	<img src={icon} alt="Application icon" height="32" width="32" class="m-2" />
 
-	<span class="inline-block text-center">{title}</span>
+	<span class="inline-block text-center leading-4">{title}</span>
 </button>
 
 <div

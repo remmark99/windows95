@@ -3,16 +3,18 @@
 	import folderIcon from '$lib/assets/Folder.svg';
 	import Folder from '../components/Folder.svelte';
 	import Clippy from '../components/Clippy.svelte';
+  import noteIcon from "$lib/assets/Note.svg";
 	const modules = import.meta.glob('../notes/*.svx', { eager: true });
 </script>
 
-<main class="flex-grow bg-[#008080] p-4 relative">
+<main class="relative flex-grow flex gap-y-4 flex-col flex-wrap bg-[#008080] py-4">
 	<div class="contents" role="grid" tabindex="0">
 		<Application icon={folderIcon} title="Notes">
 			<Folder>
 				{#each Object.entries(modules) as [todo, module] (todo)}
 					{@const Note = module.default}
-					<Application title={todo.split("/")[2]} icon={folderIcon}>
+					{@const metadata = module.metadata}
+					<Application title={metadata.title} icon={noteIcon}>
 						<div class="prose">
 							<Note />
 						</div>
@@ -29,6 +31,6 @@
 			>
 			</iframe>
 		</Application>
-    <Clippy />
+		<Clippy />
 	</div>
 </main>

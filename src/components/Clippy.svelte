@@ -7,11 +7,11 @@
 			selector: 'Merlin',
 			name: 'Merlin',
 			successCb: (agent) => {
-				agent.show(false);
-				document.getElementsByClassName('clippy')[0].removeAttribute('hidden');
-				agent.speak('something funny', false);
-        agent.play("Suggest", 2000);
-				agent.play('Hide', 0, () => agent.hide(true, () => {}));
+				// agent.show(false);
+				// document.getElementsByClassName('clippy')[0].removeAttribute('hidden');
+				// agent.speak('something funny', false);
+				//     agent.play("Suggest", 2000);
+				// agent.play('Hide', 0, () => agent.hide(true, () => {}));
 			}
 		});
 	});
